@@ -24,7 +24,7 @@ namespace Lottery
                 {
                     if (instance == null)
                     {
-                        instance = (IDatabase)System.Activator.CreateInstance(Type.GetType("Lottery.Database.Database, YSM.Database", true, false));
+                        instance = (IDatabase)System.Activator.CreateInstance(Type.GetType("Lottery.Database.Database, Lottery.Database", true, false));
                     }
                 }
             }

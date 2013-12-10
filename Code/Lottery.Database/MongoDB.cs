@@ -13,7 +13,7 @@ namespace Lottery.Database
         /// 为了本程序方便使用，直接使用二个固定的参数。
         /// 采用MongoDb的默认连接字符串，连接Lottery数据库。
         /// </summary>
-        public MongoDB():this("Server=127.0.0.1", "Lottery")
+        public MongoDB():this("Server=127.0.0.1", "caizhongle")
         {
         }
 
