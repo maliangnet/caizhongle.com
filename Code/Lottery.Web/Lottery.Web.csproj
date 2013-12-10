@@ -146,6 +146,20 @@
   <ItemGroup>
     <Content Include="Views\Shared\_WebLayout.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lottery.Database\Lottery.Database.csproj">
+      <Project>{5e91d04e-cffc-4ad9-bf76-271e7d95ffa4}</Project>
+      <Name>Lottery.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lottery.Entity\Lottery.Entity.csproj">
+      <Project>{037cdf00-7bff-4f3a-9585-d6bc45fb9c6e}</Project>
+      <Name>Lottery.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lottery.IDatabase\Lottery.IDatabase.csproj">
+      <Project>{2c7766c4-41f0-4ef4-961d-b11da8b5e1a3}</Project>
+      <Name>Lottery.IDatabase</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
