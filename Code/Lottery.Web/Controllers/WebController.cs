@@ -13,7 +13,9 @@ namespace Lottery.Web.Controllers
 
         public ActionResult Index()
         {
-            Lottery.DatabaseProvider.Instance().InsertUser(new Lottery.Entity.UserInfo { ID=new Guid().ToString(),Name="Name",Email="Email"});
+            string id = Guid.NewGuid().ToString();
+            ViewBag.id = id;
+            Lottery.DatabaseProvider.Instance().InsertUser(new Lottery.Entity.UserInfo { ID = id, Name = "Name", Email = "Email" });
             return View();
         }
 
