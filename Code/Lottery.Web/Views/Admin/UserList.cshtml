@@ -1,0 +1,22 @@
+﻿@using Webdiyer.WebControls.Mvc;
+@model PagedList<Lottery.Entity.UserInfo>
+<table id="tableList" class="table table-bordered table-striped mt">
+    <thead>
+        <tr>
+            <th>编号</th>
+            <th>用户名</th>
+            <th>邮箱</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Ajax.Pager(Model,new PagerOptions{PageIndexParameterName = "id"},new MvcAjaxOptions{UpdateTargetId = "tableList",EnablePartialLoading = true})

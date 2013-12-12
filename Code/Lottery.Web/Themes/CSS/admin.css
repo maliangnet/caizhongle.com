@@ -1,3 +1,7 @@
-﻿/*登录*/
+﻿/*通用*/
+.mt { margin-top:5px;}
+/*Views/Admin/Index.cshtml*/
 .form-sign {max-width:330px;margin:auto;padding:15px;}
 .form-sign input {margin-bottom:15px;}
+/*Views/Shared/_AdminLayout.cshtml*/
+.divAL1 {background-color:#EFEFEF;border:solid 1px #EFEFEF;padding:5px;}

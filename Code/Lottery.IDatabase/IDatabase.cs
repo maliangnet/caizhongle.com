@@ -25,9 +25,16 @@ namespace Lottery
         /// <summary>
         /// 获取用户
         /// </summary>
-        /// <param name="userID">用户编号</param>
+        /// <param name="ID">用户编号</param>
         /// <returns></returns>
-        UserInfo GetUser(string userID);
+        UserInfo GetUser(string ID);
+         /// <summary>
+        /// 获取用户
+        /// </summary>
+        /// <param name="email">邮箱</param>
+        /// <param name="password">密码</param>
+        /// <returns></returns>
+        UserInfo GetUser(string email, string password);
         /// <summary>
         /// 获取用户
         /// </summary>

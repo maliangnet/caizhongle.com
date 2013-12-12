@@ -1,15 +1,23 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewBag.Title</title>
     <link type="text/css" rel="stylesheet" href="~/Themes/CSS/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="~/Themes/CSS/admin.css" />
 </head>
 <body>
-    @RenderBody()
+    <div class="container">
+        <ul class="nav nav-pills divAL1 mt">
+            <li class="active"><a href="#">用户管理</a></li>
+            <li><a href="#">视频管理</a></li>
+        </ul>
+        @RenderBody()
+    </div>    
+    <script type="text/javascript" src="~/Themes/JS/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="~/Themes/JS/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Themes/JS/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="~/Themes/JS/MvcPager.js"></script>
 </body>    
-<script type="text/javascript" src="~/Themes/JS/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="~/Themes/JS/bootstrap.min.js"></script>
-<script type="text/javascript" src="~/Themes/JS/jquery.unobtrusive-ajax.min.js"></script>
 </html>

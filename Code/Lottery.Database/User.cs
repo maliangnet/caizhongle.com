@@ -48,13 +48,27 @@ namespace Lottery.Database
         /// <summary>
         /// 获取用户
         /// </summary>
-        /// <param name="userID">用户编号</param>
+        /// <param name="ID">用户编号</param>
         /// <returns></returns>
-        public UserInfo GetUser(string userID)
+        public UserInfo GetUser(string ID)
         {
             using (MongoDB mongoDB = new MongoDB())
             {
-                return mongoDB.GetCollection<UserInfo>().FindOne(u => u.ID == userID);
+                return mongoDB.GetCollection<UserInfo>().FindOne(u => u.ID == ID);
+            }
+        }
+
+        /// <summary>
+        /// 获取用户
+        /// </summary>
+        /// <param name="email">邮箱</param>
+        /// <param name="password">密码</param>
+        /// <returns></returns>
+        public UserInfo GetUser(string email,string password)
+        {
+            using (MongoDB mongoDB = new MongoDB())
+            {
+                return mongoDB.GetCollection<UserInfo>().FindOne(u => u.Email == email && u.Password==password);
             }
         }
 

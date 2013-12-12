@@ -1,18 +1,42 @@
-﻿@{ViewBag.Title = "Index";}
-<div class="container">
-    <form class="form-sign" method="post" data-ajax="true" data-ajax-url="/POST/Login" data-ajax-begin="Form_Begin" data-ajax-success="Form_Success">
-        <h4 class="text-center strong"><b>彩中了网站后台的呢管理</b></h4>
-        <input type="email" name="userInfo.Email" class="form-control" placeholder="请输入邮箱" value="maliangnet@126.com" required autofocus>
-        <input type="password" name="userInfo.Password" class="form-control" placeholder="请输入密码" value="111111" required>
-        <input type="submit" class="btn btn-primary btn-block" data-loading-text="加载中..." value="登录" />
-    </form>
-</div>
+﻿<!DOCTYPE html>@{Layout = null;}
+<html lang="zh-CN">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <link type="text/css" rel="stylesheet" href="~/Themes/CSS/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="~/Themes/CSS/admin.css" />
+</head>
+<body>
+    <div class="container">
+        <form class="form-sign" method="post" data-ajax="true" data-ajax-url="/POST/Login" data-ajax-begin="Form_Begin" data-ajax-success="Form_Success">
+            <h4 class="text-center strong"><b>彩中了网站后台的呢管理</b></h4>
+            <input type="email" name="userInfo.Email" class="form-control" placeholder="请输入邮箱" value="maliangnet@126.com" required autofocus>
+            <input type="password" name="userInfo.Password" class="form-control" placeholder="请输入密码" value="111111" required>
+            <input type="submit" class="btn btn-primary btn-block" data-loading-text="加载中..." value="登录" />
+            <div id="divAlter" class="alert alert-warning alert-dismissable" style="display:none;">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <strong>警告!</strong>  <span>23233</span>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="~/Themes/JS/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="~/Themes/JS/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Themes/JS/jquery.unobtrusive-ajax.min.js"></script>
+</body>    
+</html>
+
 <script type="text/javascript">
     function Form_Begin(){$("input[type=submit]").button("loading");}
     function Form_Success(json)
     {
-        if(!json.Success)
+        if(!json.Success){
             $("input[type=submit]").button("reset");
-        console.log(json);
+            $("#divAlter").show().find("span").html(json.Message);
+        }
+        else{
+            window.location.href="/Admin/Home";            
+        }
+            
     }
 </script>
