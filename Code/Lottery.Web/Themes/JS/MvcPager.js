@@ -1,4 +1,4 @@
-﻿function ($) {
+﻿(function ($) {
    $.fn.initMvcPagers = function () {
        return this.each(function () {
            new mvcPager(this).init();
@@ -267,5 +267,5 @@
                self.location.href = decodeURI(urlformat).replace("__" + pageIndexName + "__", pageIndex);
        }
    }
-)(jQuery);
-(function () { $("[data-mvcpager=true]").initMvcPagers(); });
+})(jQuery);
+(function () { $("[data-mvcpager=true]").initMvcPagers();})();

@@ -1,5 +1,12 @@
 ﻿/*通用*/
 .mt { margin-top:5px;}
+div#pager {padding-right: 0px; padding-left: 0px; font-size: 13px;color: #48b9ef;background-color: #fff; text-align: center}
+div#pager a {border-right: #f0f0f0 2px solid; padding-right: 5px; border-top: #f0f0f0 2px solid; padding-left: 5px; padding-bottom: 2px; margin: 0px 2px; border-left: #f0f0f0 2px solid; color: #48b9ef; padding-top: 2px; border-bottom: #f0f0f0 2px solid; text-decoration: none}
+div#pager a:hover {border-right: #ff5a00 2px solid; border-top: #ff5a00 2px solid; border-left: #ff5a00 2px solid; color: #ff5a00; border-bottom: #ff5a00 2px solid}
+div#pager a:active {border-right: #ff5a00 2px solid; border-top: #ff5a00 2px solid; border-left: #ff5a00 2px solid; color: #ff5a00; border-bottom: #ff5a00 2px solid}
+div#pager span.current {border-right: #ff5a00 2px solid; padding-right: 5px; border-top: #ff5a00 2px solid; padding-left: 5px; font-weight: bold; padding-bottom: 2px; border-left: #ff5a00 2px solid; color: #fff; padding-top: 2px; border-bottom: #ff5a00 2px solid; background-color: #ff6c16}
+div#pager a.disabled {display: none}
+div#pager input[type=text]{width:30px}
 /*Views/Admin/Index.cshtml*/
 .form-sign {max-width:330px;margin:auto;padding:15px;}
 .form-sign input {margin-bottom:15px;}

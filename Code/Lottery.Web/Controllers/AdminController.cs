@@ -23,10 +23,18 @@ namespace Lottery.Web.Controllers
         }
 
         //用户列表
-        public ActionResult UserList(UserInfo userInfo,int id=1)
+        public ActionResult UserList(UserInfo userInfo, PageInfo pageInfo)
         {
-            IList<UserInfo> userInfos = Lottery.DatabaseProvider.Instance().GetUser(userInfo, null).ToPagedList(id, 10);
+            if (pageInfo == null || pageInfo.PageIndex==null || pageInfo.PageSize==null) pageInfo = new PageInfo { PageIndex = 1, PageSize = 10 };
+            IList<UserInfo> userInfos = Lottery.DatabaseProvider.Instance().GetUser(userInfo, null).ToPagedList(pageInfo.PageIndex.Value, pageInfo.PageSize.Value);
             return View(userInfos);
+        }
+
+        //用户
+        public ActionResult User(string ID)
+        {
+            UserInfo uesrInfo = Lottery.DatabaseProvider.Instance().GetUser(ID);
+            return View(uesrInfo);
         }
 
     }

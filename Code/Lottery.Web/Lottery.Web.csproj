@@ -139,7 +139,9 @@
     <Content Include="Themes\JS\jquery-1.10.2.min.js" />
     <Content Include="Themes\JS\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Themes\JS\MvcPager.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -149,6 +151,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Admin\Home.cshtml" />
     <Content Include="Views\Admin\UserList.cshtml" />
+    <Content Include="Views\Admin\User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Themes\Images\" />

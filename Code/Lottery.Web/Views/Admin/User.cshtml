@@ -1,0 +1,39 @@
+﻿@{ViewBag.Title = "用户";}
+@model Lottery.Entity.UserInfo
+<form data-ajax="true" data-ajax-url="/POST/UserEdit" data-ajax-begin="Form_Begin" data-ajax-success="Form_Success" method="Post" class="form-horizontal">
+    <h1 class="text-center">012fbad8-daf7-4aef-b8c1-e50bfa939825</h1>
+    <div class="form-group">
+        <label class="control-label col-sm-2 ">用户名</label>
+        <div class="col-sm-10"><input type="text" name="userInfo.Name" value="@Model.Name" class="form-control" required autofocus /></div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">邮箱</label>
+        <div class="col-sm-10"><input type="text" name="userInfo.Email" value="@Model.Email" class="form-control" required /></div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="hidden" name="userInfo.ID" value="@Model.ID" />
+            <input type="submit" value="提交" class="btn btn-primary" />
+        </div>
+    </div>
+    <div id="divAlter" class="alert alert-warning alert-dismissable" style="display:none;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>警告!</strong>  <span>23233</span>
+    </div>
+    <div class="alert alert-success" style="display:none;">>修改成功</div>
+</form>
+<script type="text/javascript">
+    function Form_Begin(){$("input[type=submit]").button("loading");}
+    function Form_Success(json)
+    {
+        if(!json.Success){
+            $("input[type=submit]").button("reset");
+            $("#divAlter").show().find("span").html(json.Message);
+        }
+        else{    
+            $("input[type=submit]").button("reset");
+            $("#divAlter").show().find("span").html(json.Message);
+        }
+            
+    }
+</script>

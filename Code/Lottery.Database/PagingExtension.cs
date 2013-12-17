@@ -12,13 +12,13 @@ namespace Lottery.Database
             if (query == null) throw new ArgumentNullException("查询条件错误.");
             if (pageInfo == null)  return query.ToList();
             pageInfo.TotalRecord = query.Count();
-            List<T> list = query.Skip(pageInfo.PageIndex * pageInfo.PageSize).Take(pageInfo.PageSize).ToList();
+            List<T> list = query.Skip(pageInfo.PageIndex.Value * pageInfo.PageSize.Value).Take(pageInfo.PageSize.Value).ToList();
             if (list == null || list.Count == 0)
             {
                 if (pageInfo.PageIndex > 0 && pageInfo.TotalRecord > 0)
                 {
                     pageInfo.PageIndex = 0;
-                    list = query.Skip(pageInfo.PageIndex * pageInfo.PageSize).Take(pageInfo.PageSize).ToList();
+                    list = query.Skip(pageInfo.PageIndex.Value * pageInfo.PageSize.Value).Take(pageInfo.PageSize.Value).ToList();
                 }
             }
             return list;
