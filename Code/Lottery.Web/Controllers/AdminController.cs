@@ -33,7 +33,7 @@ namespace Lottery.Web.Controllers
         //用户
         public ActionResult User(string ID)
         {
-            UserInfo uesrInfo = Lottery.DatabaseProvider.Instance().GetUser(ID);
+            UserInfo uesrInfo = Lottery.DatabaseProvider.Instance().GetUserByID(ID);
             return View(uesrInfo);
         }
 
