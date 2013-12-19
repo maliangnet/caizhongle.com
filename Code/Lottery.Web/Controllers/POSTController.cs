@@ -28,9 +28,11 @@ namespace Lottery.Web.Controllers
             if (string.IsNullOrEmpty(userInfo.Password)) return Json(new MessageInfo { Success = false, Message = "请输入密码." });
             UserInfo userInfoJudge = Lottery.DatabaseProvider.Instance().GetUserByEmail(userInfo.Email);
             if (userInfoJudge != null) return Json(new MessageInfo { Success = false, Message = "邮箱已被专用,请换个试试." });
+            userInfo.ID = Guid.NewGuid().ToString();
             userInfo.Password = MaLiang.Common.Security.Security.MD5(userInfo.Password);
             Lottery.DatabaseProvider.Instance().InsertUser(userInfo);
-            return Json(new MessageInfo { Success = true, Message = "添加成功." });
+            userInfo.Password = "";
+            return Json(new MessageInfo { Success = true, Message = "添加成功.",Model=userInfo });
         }
 
         //编辑用户
@@ -46,7 +48,7 @@ namespace Lottery.Web.Controllers
             userInfoEdit.Name = userInfo.Name;
             userInfoEdit.Email = userInfo.Email;
             Lottery.DatabaseProvider.Instance().UpdateUser(userInfoEdit);
-            return Json(new MessageInfo { Success = true, Message = "修改成功." });
+            return Json(new MessageInfo { Success = true, Message = "修改成功.",Model=userInfoEdit });
         }
 
     }

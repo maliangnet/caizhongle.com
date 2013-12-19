@@ -7,5 +7,7 @@ namespace Lottery.Entity
         public bool Success { set; get; }
 
         public string Message { set; get; }
+
+        public Object Model { set; get; }
     }
 }
