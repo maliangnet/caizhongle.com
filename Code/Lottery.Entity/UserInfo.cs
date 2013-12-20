@@ -10,7 +10,23 @@ namespace Lottery.Entity
         public string Name { set; get; }
 
         public string Email { set; get; }
-        
+
         public string Password { set; get; }
+
+        public string Phone { set; get; }
+
+        public string RegisterIP { set; get; }
+
+        public int? GroupID { set; get; }
+
+        public string Photo { set; get; }
+
+        public int? Sex { set; get; }
+
+        public int? Age { set; get; }
+
+        public DateTime? Date { set; get; }
+
+        public int? Status { set; get; }
     }
 }

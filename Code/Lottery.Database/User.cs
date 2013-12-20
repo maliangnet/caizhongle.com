@@ -100,7 +100,7 @@ namespace Lottery.Database
                 if (userInfo != null && !string.IsNullOrEmpty(userInfo.ID)) query = query.Where(u => u.ID.Contains(userInfo.ID));
                 if (userInfo != null && !string.IsNullOrEmpty(userInfo.Name)) query = query.Where(u => u.Name.Contains(userInfo.Name));
                 if (userInfo != null && !string.IsNullOrEmpty(userInfo.Email)) query = query.Where(u => u.Email.Contains(userInfo.Email));
-                return query.OrderBy(u => u.ID).GetPagingList<UserInfo>(pageInfo);
+                return query.OrderByDescending(u => u.Date).GetPagingList<UserInfo>(pageInfo);
             }
         }
     }

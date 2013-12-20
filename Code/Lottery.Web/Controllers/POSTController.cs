@@ -30,6 +30,8 @@ namespace Lottery.Web.Controllers
             if (userInfoJudge != null) return Json(new MessageInfo { Success = false, Message = "邮箱已被专用,请换个试试." });
             userInfo.ID = Guid.NewGuid().ToString();
             userInfo.Password = MaLiang.Common.Security.Security.MD5(userInfo.Password);
+            userInfo.Date = DateTime.Now;
+            userInfo.RegisterIP = MaLiang.Web.Utils.GetIP();
             Lottery.DatabaseProvider.Instance().InsertUser(userInfo);
             userInfo.Password = "";
             return Json(new MessageInfo { Success = true, Message = "添加成功.",Model=userInfo });

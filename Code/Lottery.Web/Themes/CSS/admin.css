@@ -7,6 +7,7 @@ div#pager a:active {border-right: #ff5a00 2px solid; border-top: #ff5a00 2px sol
 div#pager span.current {border-right: #ff5a00 2px solid; padding-right: 5px; border-top: #ff5a00 2px solid; padding-left: 5px; font-weight: bold; padding-bottom: 2px; border-left: #ff5a00 2px solid; color: #fff; padding-top: 2px; border-bottom: #ff5a00 2px solid; background-color: #ff6c16}
 div#pager a.disabled {display: none}
 div#pager input[type=text]{width:30px}
+form#formSearch {min-height: 20px;padding: 10px;margin-bottom: 20px;border: 1px solid #E7E7E7;border-radius: 4px;-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);}
 /*Views/Admin/Index.cshtml*/
 .form-sign {max-width:330px;margin:auto;padding:15px;}
 .form-sign input {margin-bottom:15px;}
