@@ -28,5 +28,11 @@ namespace Lottery.Entity
         public DateTime? Date { set; get; }
 
         public int? Status { set; get; }
+
+        //附加属性
+        [MongoIgnore]
+        public string EmailEqual { set; get; }
+        [MongoIgnore]
+        public string NameEqual { set; get; }
     }
 }

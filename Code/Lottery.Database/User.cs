@@ -22,13 +22,13 @@ namespace Lottery.Database
         /// <summary>
         /// 删除用户
         /// </summary>
-        /// <param name="userID">用户编号</param>
-        public void DeleteUser(string userID)
+        /// <param name="ID">用户编号</param>
+        public void DeleteUser(string ID)
         {
             using (MongoDB mongoDB = new MongoDB())
             {
                 var collection = mongoDB.GetCollection<UserInfo>();
-                collection.Remove(u => u.ID == userID);
+                collection.Remove(u => u.ID == ID);
             }
         }
 
@@ -99,7 +99,9 @@ namespace Lottery.Database
                 var query = from user in collection.Linq() select user;
                 if (userInfo != null && !string.IsNullOrEmpty(userInfo.ID)) query = query.Where(u => u.ID.Contains(userInfo.ID));
                 if (userInfo != null && !string.IsNullOrEmpty(userInfo.Name)) query = query.Where(u => u.Name.Contains(userInfo.Name));
+                if (userInfo != null && !string.IsNullOrEmpty(userInfo.NameEqual)) query = query.Where(u => u.Name == userInfo.NameEqual);
                 if (userInfo != null && !string.IsNullOrEmpty(userInfo.Email)) query = query.Where(u => u.Email.Contains(userInfo.Email));
+                if (userInfo != null && !string.IsNullOrEmpty(userInfo.EmailEqual)) query = query.Where(u => u.Email == userInfo.EmailEqual);
                 return query.OrderByDescending(u => u.Date).GetPagingList<UserInfo>(pageInfo);
             }
         }

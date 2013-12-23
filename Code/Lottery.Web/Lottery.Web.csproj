@@ -131,11 +131,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
     <Content Include="Help.txt" />
-    <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.4.4.js" />
-    <Content Include="Scripts\jquery-1.4.4.min.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Themes\CSS\admin.css" />
     <Content Include="Themes\CSS\bootstrap.css" />
     <Content Include="Themes\JS\bootstrap.min.js" />
@@ -154,7 +149,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Admin\Home.cshtml" />
     <Content Include="Views\Admin\UserList.cshtml" />
-    <Content Include="Views\Admin\User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Themes\Images\" />
@@ -188,6 +182,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\VideoList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\VideoCategoryList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

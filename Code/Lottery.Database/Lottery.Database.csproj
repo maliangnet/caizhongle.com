@@ -36,10 +36,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VideoCategory.cs" />
     <Compile Include="MongoDB.cs" />
     <Compile Include="PagingExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="Video.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lottery.Entity\Lottery.Entity.csproj">

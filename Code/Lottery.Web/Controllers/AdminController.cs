@@ -30,5 +30,21 @@ namespace Lottery.Web.Controllers
             return View(userInfos);
         }
 
+        //视频列表
+        public ActionResult VideoList(VideoInfo videoInfo, PageInfo pageInfo)
+        {
+            if (pageInfo == null) pageInfo = new PageInfo();
+            IList<VideoInfo> videoInfos = Lottery.DatabaseProvider.Instance().GetVideo(videoInfo, null).ToPagedList(pageInfo.PageIndex.Value, pageInfo.PageSize.Value);
+            return View(videoInfos);
+        }
+
+        //视频分类列表
+        public ActionResult VideoCategoryList(VideoCategoryInfo videoCategoryInfo, PageInfo pageInfo)
+        {
+            if (pageInfo == null) pageInfo = new PageInfo();
+            IList<VideoCategoryInfo> videoCategoryInfos = Lottery.DatabaseProvider.Instance().GetVideoCategory(videoCategoryInfo, null);
+            return View(videoCategoryInfos);
+        }
+
     }
 }
