@@ -43,7 +43,33 @@ namespace Lottery.Web.Controllers
         {
             if (pageInfo == null) pageInfo = new PageInfo();
             IList<VideoCategoryInfo> videoCategoryInfos = Lottery.DatabaseProvider.Instance().GetVideoCategory(videoCategoryInfo, null);
+            videoCategoryInfos = ViewCategoryTree("0", videoCategoryInfos,null);
             return View(videoCategoryInfos);
+        }
+
+        private IList<VideoCategoryInfo> ViewCategoryTree(string PID, IList<VideoCategoryInfo> videoCategoryInfos, IList<VideoCategoryInfo> resultVideoCategoryInfo)
+        {
+            if (resultVideoCategoryInfo == null)
+            {
+                resultVideoCategoryInfo = new List<VideoCategoryInfo>();
+            }
+            if (videoCategoryInfos != null)
+            {
+                foreach (VideoCategoryInfo item in videoCategoryInfos)
+                {
+                    if (item.PID == PID)
+                    {
+                        string split = "";
+                        for (int i = 0; i < item.Level-1; i++)
+                            split += "━";
+                        if(item.Level>1)
+                            item.Name = "┗" + split + item.Name;
+                        resultVideoCategoryInfo.Add(item);
+                        ViewCategoryTree(item.ID, videoCategoryInfos, resultVideoCategoryInfo);
+                    }
+                }
+            }
+            return resultVideoCategoryInfo;
         }
 
     }

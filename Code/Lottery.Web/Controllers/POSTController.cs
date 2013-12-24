@@ -98,10 +98,16 @@ namespace Lottery.Web.Controllers
         {
             if (videoCategoryInfo == null) return Json(new MessageInfo { Success = false, Message = "信息错误." });
             if (string.IsNullOrEmpty(videoCategoryInfo.Name)) return Json(new MessageInfo { Success = false, Message = "请输入名称." });
-            if (string.IsNullOrEmpty(videoCategoryInfo.PID)) return Json(new MessageInfo { Success = false, Message = "请输入上级编号." });
-            VideoCategoryInfo videoCategoryInfoJudge = Lottery.DatabaseProvider.Instance().GetVideoCategoryByName(videoCategoryInfo.Name);
+            if (string.IsNullOrEmpty(videoCategoryInfo.PID)) return Json(new MessageInfo { Success = false, Message = "请选择上级." });
+            VideoCategoryInfo videoCategoryInfoJudge = Lottery.DatabaseProvider.Instance().GetVideoCategoryByNameAndPID(videoCategoryInfo.Name, videoCategoryInfo.PID);
             if (videoCategoryInfoJudge != null) return Json(new MessageInfo { Success = false, Message = "名称已被专用,请换个试试." });
             videoCategoryInfo.ID = Guid.NewGuid().ToString();
+            videoCategoryInfo.Level = 1;
+            if (videoCategoryInfo.PID != "0")
+            {
+                VideoCategoryInfo videoCategoryInfoParent = Lottery.DatabaseProvider.Instance().GetVideoCategoryByID(videoCategoryInfo.PID);
+                videoCategoryInfo.Level = videoCategoryInfoParent == null ? videoCategoryInfo.Level : videoCategoryInfoParent.Level + 1;
+            }
             videoCategoryInfo.Date = DateTime.Now;
             videoCategoryInfo.Status = Convert.ToInt16(EnumInfo.Status.Start);
             Lottery.DatabaseProvider.Instance().InsertVideoCategory(videoCategoryInfo);
@@ -117,7 +123,17 @@ namespace Lottery.Web.Controllers
             VideoCategoryInfo videoCategoryInfoEdit = Lottery.DatabaseProvider.Instance().GetVideoCategoryByID(videoCategoryInfo.ID);
             if (videoCategoryInfoEdit == null) return Json(new MessageInfo { Success = false, Message = "视频分类不存在" });
             if (string.IsNullOrEmpty(videoCategoryInfo.Name)) return Json(new MessageInfo { Success = false, Message = "请输入名称." });
-            if (string.IsNullOrEmpty(videoCategoryInfo.PID)) return Json(new MessageInfo { Success = false, Message = "请输入上级编号." });
+            if (string.IsNullOrEmpty(videoCategoryInfo.PID)) return Json(new MessageInfo { Success = false, Message = "请选择上级编号." });
+            if (videoCategoryInfoEdit.PID != videoCategoryInfo.PID)
+            {
+                if (Lottery.DatabaseProvider.Instance().GetVideoCategoryByPID(videoCategoryInfo.ID) != null)
+                    return Json(new MessageInfo { Success = false, Message = "此分类下有子级,不能修改." });
+                else
+                {
+                    VideoCategoryInfo videoCategoryInfoParent = Lottery.DatabaseProvider.Instance().GetVideoCategoryByID(videoCategoryInfo.PID);
+                    videoCategoryInfoEdit.Level = videoCategoryInfoParent == null ? 1 : videoCategoryInfoParent.Level + 1;
+                }
+            }            
             videoCategoryInfoEdit.Name = videoCategoryInfo.Name;
             videoCategoryInfoEdit.PID = videoCategoryInfo.PID;
             videoCategoryInfoEdit.Memo = videoCategoryInfo.Memo;

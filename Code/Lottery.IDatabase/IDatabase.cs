@@ -118,6 +118,19 @@ namespace Lottery
         /// <summary>
         /// 获取视频分类
         /// </summary>
+        /// <param name="name">视频分类名称</param>
+        /// <param name="name">视频分类父级编号</param>
+        /// <returns></returns>
+        VideoCategoryInfo GetVideoCategoryByNameAndPID(string name, string PID);
+        /// <summary>
+        /// 获取视频分类
+        /// </summary>
+        /// <param name="name">视频分类父级编号</param>
+        /// <returns></returns>
+        VideoCategoryInfo GetVideoCategoryByPID(string PID);
+        /// <summary>
+        /// 获取视频分类
+        /// </summary>
         /// <param name="videoCategoryInfo">视频分类实体</param>
         /// <param name="pageInfo">分页实体</param>
         /// <returns></returns>
