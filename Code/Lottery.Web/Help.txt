@@ -4,5 +4,4 @@
 4、Bootstrap   http://v3.bootcss.com/css/
 5、Unobtrusive JavaScript in ASP.NET MVC   http://kb.cnblogs.com/page/80652/
 6、MVC 分页 http://www.webdiyer.com/
-7、MongoDB配置 D:\MaLiang\mongodb\bin   
-   mongod -dbpath D:\MaLiang\mongodb\maliang\data
+7、MongoDB配置   D:/MaLiang/mongodb/bin/mongod -dbpath D:/MaLiang/mongodb/maliang/data

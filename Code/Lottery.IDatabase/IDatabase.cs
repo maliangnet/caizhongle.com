@@ -81,6 +81,13 @@ namespace Lottery
         /// <summary>
         /// 获取视频
         /// </summary>
+        /// <param name="name">视频名称</param>
+        /// <param name="videoCategoryID">视频分类编号</param>
+        /// <returns></returns>
+        VideoInfo GetVideoByNameAndCategoryID(string name, string videoCategoryID);
+        /// <summary>
+        /// 获取视频
+        /// </summary>
         /// <param name="videoInfo">视频实体</param>
         /// <param name="pageInfo">分页实体</param>
         /// <returns></returns>
@@ -134,7 +141,7 @@ namespace Lottery
         /// <param name="videoCategoryInfo">视频分类实体</param>
         /// <param name="pageInfo">分页实体</param>
         /// <returns></returns>
-        IList<VideoCategoryInfo> GetVideoCategory(VideoCategoryInfo videoCategoryInfo, PageInfo pageInfo);
+        IList<VideoCategoryInfo> GetVideoCategory(VideoCategoryInfo videoCategoryInfo);
         #endregion
     }
 }

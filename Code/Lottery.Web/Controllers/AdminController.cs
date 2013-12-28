@@ -35,6 +35,8 @@ namespace Lottery.Web.Controllers
         {
             if (pageInfo == null) pageInfo = new PageInfo();
             IList<VideoInfo> videoInfos = Lottery.DatabaseProvider.Instance().GetVideo(videoInfo, null).ToPagedList(pageInfo.PageIndex.Value, pageInfo.PageSize.Value);
+            IList<VideoCategoryInfo> videoCategoryInfos = Lottery.DatabaseProvider.Instance().GetVideoCategory(null);
+            ViewBag.VideoCategoryInfos = ViewCategoryTree("0", videoCategoryInfos, null);
             return View(videoInfos);
         }
 
@@ -42,7 +44,7 @@ namespace Lottery.Web.Controllers
         public ActionResult VideoCategoryList(VideoCategoryInfo videoCategoryInfo, PageInfo pageInfo)
         {
             if (pageInfo == null) pageInfo = new PageInfo();
-            IList<VideoCategoryInfo> videoCategoryInfos = Lottery.DatabaseProvider.Instance().GetVideoCategory(videoCategoryInfo, null);
+            IList<VideoCategoryInfo> videoCategoryInfos = Lottery.DatabaseProvider.Instance().GetVideoCategory(videoCategoryInfo);
             videoCategoryInfos = ViewCategoryTree("0", videoCategoryInfos,null);
             return View(videoCategoryInfos);
         }

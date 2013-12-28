@@ -104,7 +104,7 @@ namespace Lottery.Database
         /// <param name="videoCategoryInfo">视频分类实体</param>
         /// <param name="pageInfo">分页实体</param>
         /// <returns></returns>
-        public IList<VideoCategoryInfo> GetVideoCategory(VideoCategoryInfo videoCategoryInfo, PageInfo pageInfo)
+        public IList<VideoCategoryInfo> GetVideoCategory(VideoCategoryInfo videoCategoryInfo)
         {
             using (MongoDB mongoDB = new MongoDB())
             {
@@ -112,7 +112,7 @@ namespace Lottery.Database
                 var query = from user in collection.Linq() select user;
                 if (videoCategoryInfo != null && !string.IsNullOrEmpty(videoCategoryInfo.ID)) query = query.Where(u => u.ID.Contains(videoCategoryInfo.ID));
                 if (videoCategoryInfo != null && !string.IsNullOrEmpty(videoCategoryInfo.Name)) query = query.Where(u => u.Name.Contains(videoCategoryInfo.Name));
-                return query.OrderByDescending(u => u.Date).GetPagingList<VideoCategoryInfo>(pageInfo);
+                return query.OrderByDescending(u => u.Date).ToList<VideoCategoryInfo>();
             }
         }
     }

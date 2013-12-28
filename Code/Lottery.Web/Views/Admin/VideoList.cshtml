@@ -1,6 +1,6 @@
 ﻿@using Webdiyer.WebControls.Mvc;
 @model PagedList<Lottery.Entity.VideoInfo>
-@{ViewBag.Title = "视频管理";}
+@{ViewBag.Title = "Inovit";}
 <div>
     <form id="formSearch" class="form-inline">
         <div class="form-group">
@@ -8,6 +8,9 @@
         </div>
         <div class="form-group">
             <label>名称</label><input name="videoInfo.Name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>分类</label><input name="videoInfo.Name" class="form-control" />
         </div>
         <div class="form-group">
             <label>文件</label><input name="videoInfo.File" class="form-control" />
@@ -26,6 +29,7 @@
         <tr>
             <th>编号</th>
             <th>名称</th>
+            <th>分类</th>
             <th>文件</th>
             <th>日期</th>
             <th>操作</th>
@@ -35,9 +39,13 @@
             <tr data-key="@item.ID">
                 <td data-name="ID">@item.ID</td>
                 <td data-name="Name" >@item.Name</td>
+                <td data-name="VideoCategoryName" >@item.VideoCategoryName</td>
                 <td data-name="File" >@item.File</td>
                 <td data-name="Date" >@item.Date</td>
-                <td><input type="button" value="编辑" data-type="edit" class="btn btn-default" /></td>
+                <td>
+                    <input type="button" value="编辑" data-type="edit" class="btn btn-default" />
+                    <span class="hide" data-name="VideoCategoryID">@item.VideoCategoryID</span>
+                </td>
             </tr>
         }
     </table>
@@ -63,10 +71,30 @@
                         <div class="col-sm-4"><input type="text" name="videoInfo.Name" class="form-control" required /></div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-sm-2">分类</label>
+                        <div class="col-sm-4">
+                            <select name="videoInfo.VideoCategoryID" class="form-control" required>
+                                <option value="">请选择</option>
+                                @foreach (var item in ViewBag.VideoCategoryInfos) 
+                                {
+                                    <option value="@item.ID">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label col-sm-2">文件</label>
                         <div class="col-sm-8"><input type="text" name="videoInfo.File" class="form-control" required/></div>
                     </div>
-                    <div id="divAlterNew" class="alert alert-warning hide"><span></span><button class="close">x</button></div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">图片</label>
+                        <div class="col-sm-8">
+                            <a class="uploadFiles" href="javascript:void(0)"><input type="file" id="fileNewImage" name="file" /></a>
+                            <input type="hidden" id="hiddenNewImage" name="videoInfo.Image"/>
+                            <p id="pNewImage"></p>
+                        </div>
+                    </div>
+                    <div id="divAlertNew" class="alert alert-warning hide"><span></span><button class="close">x</button></div>
                 </div>
                 <div class="modal-footer">                    
                     <button type="submit" id="btnNew" class="btn btn-primary">添加视频</button>
@@ -95,6 +123,18 @@
                         <div class="col-sm-10"><input type="text" name="videoInfo.Name" data-name="Name" class="form-control" required autofocus /></div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-sm-2">分类</label>
+                        <div class="col-sm-4">
+                            <select name="videoInfo.VideoCategoryID" data-name="VideoCategoryID" class="form-control" required>
+                                <option value="">请选择</option>
+                                @foreach (var item in ViewBag.VideoCategoryInfos) 
+                                {
+                                    <option value="@item.ID">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label col-sm-2">文件</label>
                         <div class="col-sm-10"><input type="text" name="videoInfo.File" data-name="File" class="form-control" required /></div>
                     </div>      
@@ -115,16 +155,41 @@
 {
     <script type="text/javascript">
         $(function(){
+            //关闭提示
             $("div.alert").find("button").click(function(e){
                 $(this).closest("div").addClass("hide");
                 e.preventDefault();
             });
+            //上传图片
+            $("#fileNewImage").change(function()
+            {
+                $("#divAlertNew").addClass("hide");
+                if(!/\.gif|jpg|jpeg|bmp|png$/i.test($(this).val())){
+                    $("#divAlertNew").removeClass("hide").find("span").html("图片格式必须是:gif、jpg、jpeg、bmp或png.");
+                    return false;
+                }
+                var data = new FormData();
+                $.each($(this)[0].files, function(i, file) {data.append('file', file);});
+                $.ajax({
+                    url:'/POST/UploadImage',type:'POST',data:data,cache: false,contentType: false,processData: false,
+                    success:function(json){
+                        $("#hiddenNewImage").val(json.Model.Name);
+                        $("#pNewImage").append("<img class='img-rounded' src='"+json.Model.Path+"'alt=''/>");
+                    },
+                    complete:function(XMLHttpRequest, textStatus){
+                        if(textStatus=="error"){
+                            $("#divAlertNew").removeClass("hide").find("span").html("系统出错,请稍候再试.");
+                        }
+                    }
+                });
+            });
+
         })
     </script>
 
     <script type="text/javascript">        
         function newBegin(){$("#btnNew").button("加载中...");}
-        function newFailure(){$("#btnNew").button("reset");}
+        function newFailure(xhr,status ,error){$("#divAlertNew").removeClass("hide").find("span").html(error);$("#btnNew").button("reset");}
         function newSucess(json){
             $("#btnNew").button("reset");
             if(!json.Success){
@@ -133,7 +198,7 @@
             else{
                 $("#formNew")[0].reset();
                 $("#divNew").modal("hide");
-                var trHtml = $("<tr><td data-name='ID'></td><td data-name='Name'><td data-name='File'></td><td data-name='Date'></td><td><input type='button' data-type='edit' value='编辑' class='btn btn-default' /></td></tr>");
+                var trHtml = $("<tr><td data-name='ID'></td><td data-name='Name'><td data-name='VideoCategoryName'></td><td data-name='File'></td><td data-name='Date'></td><td><input type='button' data-type='edit' value='编辑' class='btn btn-default' /></td></tr>");
                 for(var attr in json.Model){
                     trHtml.find("td[data-name="+attr+"]").html(json.Model[attr]);
                 }
@@ -152,15 +217,15 @@
                     var tr = $(this).closest("tr");
                     $("#divEdit").find("[data-name]").each(function(){
                        var tagName = $(this)[0].tagName.toUpperCase();
-                       if(tagName == "INPUT")$(this).val(tr.find("td[data-name="+$(this).attr("data-name")+"]").html());
-                       else $(this).html(tr.find("td[data-name="+$(this).attr("data-name")+"]").html());                       
+                       if(tagName == "INPUT" || tagName == "SELECT")$(this).val(tr.find("[data-name="+$(this).attr("data-name")+"]").html());
+                       else $(this).html(tr.find("[data-name="+$(this).attr("data-name")+"]").html());                       
                     });
                     $("#divEdit").modal("show");
                  }
              });        
         })
         function editBegin(){$("#btnEdit").button("加载中...");}
-        function editFailure(){$("#btnEdit").button("reset");}
+        function editFailure(xhr,status ,error){$("#divAlterEdit").removeClass("hide").find("span").html(error);$("#btnEdit").button("reset");}
         function editSucess(json){
             $("#btnNew").button("reset");
             if(!json.Success){

@@ -126,7 +126,7 @@
 
     <script type="text/javascript">        
         function newBegin(){$("#btnNew").button("加载中...");}
-        function newFailure(){$("#btnNew").button("reset");}
+        function newFailure(xhr,status ,error){$("#divAlertNew").removeClass("hide").find("span").html(error);$("#btnNew").button("reset");}
         function newSucess(json){
             $("#btnNew").button("reset");
             if(!json.Success){
@@ -179,7 +179,7 @@
              });        
         })
         function editBegin(){$("#btnEdit").button("加载中...");}
-        function editFailure(){$("#btnEdit").button("reset");}
+        function editFailure(xhr,status ,error){$("#divAlterEdit").removeClass("hide").find("span").html(error);$("#btnEdit").button("reset");}
         function editSucess(json){
             $("#btnNew").button("reset");
             if(!json.Success){

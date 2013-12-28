@@ -9,15 +9,12 @@
 </head>
 <body style="height:100%;vertical-align:middle;">
     <div class="container center" style="vertical-align:middle;">
-        <form class="form-sign" method="post" data-ajax="true" data-ajax-url="/POST/Login" data-ajax-begin="Form_Begin" data-ajax-success="Form_Success">
+        <form class="form-sign" method="post" data-ajax="true" data-ajax-url="/POST/Login" data-ajax-begin="formBegin" data-ajax-failure="formFailure" data-ajax-success="formSuccess">
             <h4 class="text-center strong"><b>彩中了网站后台的呢管理</b></h4>
             <input type="email" name="userInfo.Email" class="form-control" placeholder="请输入邮箱" value="maliangnet@126.com" required autofocus>
             <input type="password" name="userInfo.Password" class="form-control" placeholder="请输入密码" value="111111" required>
             <input type="submit" class="btn btn-primary btn-block" data-loading-text="加载中..." value="登录" />
-            <div id="divAlter" class="alert alert-warning alert-dismissable" style="display:none;">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              <strong>警告!</strong>  <span>23233</span>
-            </div>
+            <div id="divAlert" class="alert alert-warning hide"><span></span><button class="close">x</button></div>
         </form>
     </div>
     <script type="text/javascript" src="~/Themes/JS/jquery-1.10.2.min.js"></script>
@@ -27,8 +24,18 @@
 </html>
 
 <script type="text/javascript">
-    function Form_Begin(){$("input[type=submit]").button("loading");}
-    function Form_Success(json)
+    $(function(){
+        $("div.alert").find("button").click(function(e){
+            $(this).closest("div").addClass("hide");
+            e.preventDefault();
+        });
+    })
+    function formBegin(){$("input[type=submit]").button("loading");}
+    function formFailure(xhr,status ,error){
+        $("#divAlert").removeClass("hide").find("span").html(error);
+        $("input[type=submit]").button("reset");
+    }
+    function formSuccess(json)
     {
         if(!json.Success){
             $("input[type=submit]").button("reset");

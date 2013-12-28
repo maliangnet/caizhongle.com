@@ -133,6 +133,7 @@
     <Content Include="Help.txt" />
     <Content Include="Themes\CSS\admin.css" />
     <Content Include="Themes\CSS\bootstrap.css" />
+    <Content Include="Themes\Images\uploadFileBG.gif" />
     <Content Include="Themes\JS\bootstrap.min.js" />
     <Content Include="Themes\JS\jquery-1.10.2.min.js" />
     <Content Include="Themes\JS\jquery.unobtrusive-ajax.min.js" />
@@ -151,8 +152,8 @@
     <Content Include="Views\Admin\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Themes\Images\" />
     <Folder Include="Themes\Resource\" />
+    <Folder Include="Upload\Video\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web\Index.cshtml" />
