@@ -133,8 +133,10 @@
     <Content Include="Help.txt" />
     <Content Include="Themes\CSS\admin.css" />
     <Content Include="Themes\CSS\bootstrap.css" />
+    <Content Include="Themes\Images\delete.gif" />
     <Content Include="Themes\Images\uploadFileBG.gif" />
     <Content Include="Themes\JS\bootstrap.min.js" />
+    <Content Include="Themes\JS\Common.js" />
     <Content Include="Themes\JS\jquery-1.10.2.min.js" />
     <Content Include="Themes\JS\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Themes\JS\MvcPager.js" />

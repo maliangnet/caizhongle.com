@@ -11,13 +11,13 @@
     <nav class="navbar navbar-default" role="navigation">
           <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">Logo</a>
+            <a href="/Admin/Home"><img src="/Themes/Images/logo.gif" alt="Logo" /></a>
           </div>
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
               <li class="active"><a href="/Admin/UserList">用户管理</a></li>
               <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">视频管理<b class="caret"></b></a>
+                  <a href="/Admin/VideoList" class="dropdown-toggle" data-toggle="dropdown">视频管理<b class="caret"></b></a>
                    <ul class="dropdown-menu">
                       <li><a href="/Admin/VideoList">视频管理</a></li>
                       <li><a href="/Admin/VideoCategoryList">视频分类管理</a></li>
@@ -33,10 +33,11 @@
     <div class="container">
         @RenderBody()
     </div>    
-    <script type="text/javascript" src="~/Themes/JS/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="~/Themes/JS/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Themes/JS/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="~/Themes/JS/bootstrap.js"></script>
     <script type="text/javascript" src="~/Themes/JS/MvcPager.js"></script>
     <script type="text/javascript" src="~/Themes/JS/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="~/Themes/JS/Common.js"></script>
     @RenderSection("ScriptSection", false);
 </body>    
 </html>

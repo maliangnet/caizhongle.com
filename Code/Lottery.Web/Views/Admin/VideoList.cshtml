@@ -18,9 +18,9 @@
         <div class="form-group">
              <label>&nbsp;</label>
             <input type="hidden" name="pageInfo.PageSize" value="10" />
-            <input type="submit" value="搜索" class="btn btn-primary form-control" />
+            <input type="submit" id="btnSearch" class="btn btn-primary form-control" />
         </div>
-        <div class="pull-right"> <label>&nbsp;</label><input type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#divNew" value="添加视频" /></div>
+        <div class="pull-right"> <label>&nbsp;</label><input type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#divNew" data-loading-text="加载中..." value="添加视频" /></div>
     </form>
 </div>
 
@@ -91,13 +91,13 @@
                         <div class="col-sm-8">
                             <a class="uploadFiles" href="javascript:void(0)"><input type="file" id="fileNewImage" name="file" /></a>
                             <input type="hidden" id="hiddenNewImage" name="videoInfo.Image"/>
-                            <p id="pNewImage"></p>
+                            <p id="pNewImage" class="pVideoListImage"></p>
                         </div>
                     </div>
                     <div id="divAlertNew" class="alert alert-warning hide"><span></span><button class="close">x</button></div>
                 </div>
                 <div class="modal-footer">                    
-                    <button type="submit" id="btnNew" class="btn btn-primary">添加视频</button>
+                    <button type="submit" id="btnNew" class="btn btn-primary" data-loading-text="加载中...">添加视频</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
@@ -163,9 +163,11 @@
             //上传图片
             $("#fileNewImage").change(function()
             {
+               $("#btnNew").button("loading");
                 $("#divAlertNew").addClass("hide");
                 if(!/\.gif|jpg|jpeg|bmp|png$/i.test($(this).val())){
                     $("#divAlertNew").removeClass("hide").find("span").html("图片格式必须是:gif、jpg、jpeg、bmp或png.");
+                    $("#btnNew").button("reset");
                     return false;
                 }
                 var data = new FormData();
@@ -174,12 +176,13 @@
                     url:'/POST/UploadImage',type:'POST',data:data,cache: false,contentType: false,processData: false,
                     success:function(json){
                         $("#hiddenNewImage").val(json.Model.Name);
-                        $("#pNewImage").append("<img class='img-rounded' src='"+json.Model.Path+"'alt=''/>");
+                        $("#pNewImage").html("<img class='img-rounded' src='"+json.Model.Path+"'alt=''/><br/><img data-imageName='"+json.Model.Name+"' onclick='DeleteImage(this)' src='/Themes/Images/delete.gif' alt='删除' />");
                     },
                     complete:function(XMLHttpRequest, textStatus){
                         if(textStatus=="error"){
                             $("#divAlertNew").removeClass("hide").find("span").html("系统出错,请稍候再试.");
                         }
+                        $("#btnNew").button("reset");
                     }
                 });
             });
@@ -187,8 +190,33 @@
         })
     </script>
 
+    <script type="text/javascript">
+        function DeleteImage(obj)
+        {
+            $("#btnNew").button("loading");
+            $.ajax({
+                    url:"/POST/DeleteImage",type:"POST",data:{name:encodeURI($(obj).attr("data-imageName"))},
+                    success:function(json){
+                        if(!json.Success){
+                            $("#divAlertNew").removeClass("hide").find("span").html(json.Message);
+                        }
+                        else{
+                            $("#hiddenNewImage").val("");
+                            $("#pNewImage").html("");
+                        }
+                    },
+                    complete:function(XMLHttpRequest, textStatus){
+                        if(textStatus=="error"){
+                            $("#divAlertNew").removeClass("hide").find("span").html("系统出错,请稍候再试.");
+                        }
+                        $("#btnNew").button("reset");
+                    }
+                });
+        }
+    </script>
+
     <script type="text/javascript">        
-        function newBegin(){$("#btnNew").button("加载中...");}
+        function newBegin(){$("#btnNew").button("loading");}
         function newFailure(xhr,status ,error){$("#divAlertNew").removeClass("hide").find("span").html(error);$("#btnNew").button("reset");}
         function newSucess(json){
             $("#btnNew").button("reset");

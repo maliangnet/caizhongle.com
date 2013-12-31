@@ -12,8 +12,10 @@ form#formSearch {min-height: 20px;padding: 10px;margin-bottom: 20px;border: 1px 
 a.uploadFiles {width:90px;height:30px;overflow:hidden;display:block;border:1px solid #BEBEBE;background:url(../Images/uploadFileBG.gif) left top no-repeat;text-decoration:none;}
 a.uploadFiles:hover {background-color:#FFFFEE;background-position:0 -30px;}
 a.uploadFiles input {margin-left:-350px;font-size:30px;cursor:pointer;filter:alpha(opacity=0);opacity:0;}
+/*Views/Shared/_AdminLayout.cshtml*/
+.divAL1 {background-color:#EFEFEF;border:solid 1px #EFEFEF;padding:5px;}
 /*Views/Admin/Index.cshtml*/
 .form-sign {max-width:330px;margin:auto;padding:15px;}
 .form-sign input {margin-bottom:15px;}
-/*Views/Shared/_AdminLayout.cshtml*/
-.divAL1 {background-color:#EFEFEF;border:solid 1px #EFEFEF;padding:5px;}
+/*Views/Shared/VideoList.cshtml*/
+.pVideoListImage img{margin-left:5px;}

@@ -163,20 +163,39 @@ namespace Lottery.Web.Controllers
     // POST工具类
     public partial class POSTController : Controller
     {
+        [HttpPost]
         public JsonResult UploadImage(HttpPostedFileBase file)
         {
             if (file == null || file.ContentLength == 0) return Json(new MessageInfo { Success = false, Message = "请添加文件." });
             string extension = Path.GetExtension(file.FileName);
             if (!Regex.IsMatch(extension, "\\.gif|jpg|jpeg|bmp|png$",RegexOptions.IgnoreCase)) return Json(new MessageInfo { Success = false, Message = "图片格式必须是:gif、jpg、jpeg、bmp或png." });
-            string name =  DateTime.Now.ToString("yyyyMMddHHmmssfff");
-            string path = Path.Combine(Server.MapPath("~/Upload/Video"), name + extension);
+            string name = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            string directory = "/Upload/Video";
+            string directoryPhysical =Server.MapPath(directory);
+            string path = Path.Combine(directoryPhysical, name + extension);
             file.SaveAs(path);
-            string thumNail10 = Path.Combine(Server.MapPath("~/Upload/Video"), name + "_10" + extension);
-            string thumNail20 = Path.Combine(Server.MapPath("~/Upload/Video"), name + "_20" + extension);
-            MaLiang.Common.Image.ThumNail.MakeThumNail(path, thumNail10, 70, 39);
-            MaLiang.Common.Image.ThumNail.MakeThumNail(path, thumNail20, 200, 110);
-            Lottery.Entity.FileInfo fileInfo = new Entity.FileInfo { Name = thumNail10, Directory = "/Upload/Video", Path = "/Upload/Video/" + thumNail10 };
+            string thumNail1 = name + "_10" + extension;
+            string thumNail2 = name + "_20" + extension;
+            MaLiang.Common.Image.ThumNail.MakeThumNail(path, directoryPhysical +"/" +thumNail1, 70, 39);
+            MaLiang.Common.Image.ThumNail.MakeThumNail(path, directoryPhysical +"/" +thumNail2, 200, 110);
+            Lottery.Entity.FileInfo fileInfo = new Entity.FileInfo { Name = name + extension, Directory = directory, Path = "/Upload/Video/" + thumNail1, ThumNail1 = thumNail1, ThumNail2 = thumNail2 };
             return Json(new MessageInfo { Success = true, Message = "添加成功", Model = fileInfo });
+        }
+
+        [HttpPost]
+        public JsonResult DeleteImage(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return Json(new MessageInfo { Success = false, Message = "文件名错误." });
+            string directory = "/Upload/Video/"; string directoryPhysical = Server.MapPath(directory);
+            System.IO.FileInfo fileInfo = new System.IO.FileInfo(directoryPhysical + name);
+            string extension = Path.GetExtension(name);
+            if (fileInfo.Exists == false) return Json(new MessageInfo { Success = false, Message = "文件不存在." });
+            fileInfo.Delete();
+            fileInfo = new System.IO.FileInfo(directoryPhysical + "/" + name.Replace(extension,"") + "_10" + extension);
+            if (fileInfo.Exists) fileInfo.Delete();
+            fileInfo = new System.IO.FileInfo(directoryPhysical + "/" + name.Replace(extension, "") + "_20" + extension);
+            if (fileInfo.Exists) fileInfo.Delete();
+            return Json(new MessageInfo { Success = true, Message = "操作成功"});
         }
     }
 }
