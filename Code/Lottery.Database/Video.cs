@@ -99,7 +99,7 @@ namespace Lottery.Database
                 var query = from video in collection.Linq() select video;
                 if (videoInfo != null && !string.IsNullOrEmpty(videoInfo.ID)) query = query.Where(u => u.ID.Contains(videoInfo.ID));
                 if (videoInfo != null && !string.IsNullOrEmpty(videoInfo.Name)) query = query.Where(u => u.Name.Contains(videoInfo.Name));
-                if (videoInfo != null && !string.IsNullOrEmpty(videoInfo.Name)) query = query.Where(u => u.Name==videoInfo.NameEqual);
+                if (videoInfo != null && !string.IsNullOrEmpty(videoInfo.NameEqual)) query = query.Where(u => u.Name == videoInfo.NameEqual);
                 if (videoInfo != null && !string.IsNullOrEmpty(videoInfo.File)) query = query.Where(u => u.File.Contains(videoInfo.File));
                 if (videoInfo != null && !string.IsNullOrEmpty(videoInfo.VideoCategoryID)) query = query.Where(u => u.VideoCategoryID == videoInfo.VideoCategoryID);
                 return query.OrderByDescending(u => u.Date).GetPagingList<VideoInfo>(pageInfo);

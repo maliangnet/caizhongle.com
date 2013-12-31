@@ -1,6 +1,6 @@
 ﻿@using Webdiyer.WebControls.Mvc;
 @model IList<Lottery.Entity.VideoCategoryInfo>
-@{ViewBag.Title = "视频分类管理";}
+@{ViewBag.Title = "Inovit";}
 <div class="pull-right"><input type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#divNew" value="新建视频分类" /></div>      
 <div id="divList" class="table-responsive clearfix"> 
     <table class="table table-striped table-bordered table-hover">        
@@ -27,7 +27,7 @@
     </table>
 </div>
 
-<form id="formNew" data-ajax="true" data-ajax-url="/POST/VideoCategoryNew" data-ajax-begin="newBegin" data-ajax-failure="newFailure" data-ajax-success="newSucess" method="Post" class="form-horizontal">
+<form id="formNew" data-ajax="true" data-ajax-url="/POST/VideoCategoryNew"  data-ajax-begin="FormNew.Begin" data-ajax-failure="FormNew.Failure" data-ajax-success="FormNew.Sucess" method="Post" class="form-horizontal">
     <div id="divNew" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -59,7 +59,7 @@
                     <div id="divAlertNew" class="alert alert-warning hide"><span></span><button class="close">x</button></div>
                 </div>
                 <div class="modal-footer">                    
-                    <button type="submit" id="btnNew" class="btn btn-primary">添加视频分类</button>
+                    <button type="submit" id="btnNew" data-loading-text="加载中..." class="btn btn-primary">添加视频分类</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
@@ -67,7 +67,7 @@
     </div>
 </form>
 
-<form id="formEdit" data-ajax="true" data-ajax-url="/POST/VideoCategoryEdit" data-ajax-begin="editBegin" data-ajax-failure="editFailure" data-ajax-success="editSucess" method="Post" class="form-horizontal">
+<form id="formEdit" data-ajax="true" data-ajax-url="/POST/VideoCategoryEdit" data-ajax-begin="FormEdit.Begin" data-ajax-failure="FormEdit.Failure" data-ajax-success="FormEdit.Sucess" method="Post" class="form-horizontal">
     <div id="divEdit" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -104,7 +104,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="videoCategoryInfo.ID"  data-name="ID" />
-                    <input type="submit" value="保存" class="btn btn-primary" />
+                    <input type="submit" value="保存" data-loading-text="加载中..." class="btn btn-primary" />
                     <input type="button" value="关闭" class="btn btn-default" data-dismiss="modal" />
               </div>
             </div>
@@ -115,34 +115,14 @@
 
 @section ScriptSection
 {
+
     <script type="text/javascript">
         $(function(){
-            $("div.alert").find("button").click(function(e){
-                $(this).closest("div").addClass("hide");
-                e.preventDefault();
-            });
-        })
-    </script>
-
-    <script type="text/javascript">        
-        function newBegin(){$("#btnNew").button("加载中...");}
-        function newFailure(xhr,status ,error){$("#divAlertNew").removeClass("hide").find("span").html(error);$("#btnNew").button("reset");}
-        function newSucess(json){
-            $("#btnNew").button("reset");
-            if(!json.Success){
-                $("#divAlertNew").removeClass("hide").find("span").html(json.Message);
-            }
-            else{
-                $("#formNew")[0].reset();
-                $("#divNew").modal("hide");                
-                var trHtml = $("<tr><td data-name='Name'></td><td data-name='ID'></td><td data-name='Memo'></td><td data-name='Date'></td><td><input type='button' data-type='edit' value='编辑' class='btn btn-default' /><span class='hide' data-name='PID'></span></td></tr>");
-                for(var attr in json.Model){
-                    trHtml.find("[data-name="+attr+"]").html(json.Model[attr]);
-                }
+            FormNew.Config.template = "<tr><td data-name='Name'></td><td data-name='ID'></td><td data-name='Memo'></td><td data-name='Date'></td><td><input type='button' data-type='edit' value='编辑' class='btn btn-default' /><span class='hide' data-name='PID'></span></td></tr>";
+            FormEvent.NewSucess = function(json){
                 if(json.Model["PID"]=="0"){
                     $("#selectNewPID").append("<option value="+json.Model["ID"]+">"+json.Model["Name"]+"</option>");
                     $("#selectEditPID").append("<option value="+json.Model["ID"]+">"+json.Model["Name"]+"</option>");
-                    $("#divList tr:eq(0)").after(trHtml);
                 }
                 else{
                     var split = "┗";
@@ -150,63 +130,31 @@
                         for (var i = 0; i < parseInt(json.Model.Level)-1; i++)
                             split += "━";                    
                     }
-                    trHtml.find("[data-name=Name]").text(split + trHtml.find("[data-name=Name]").text());
-                     $("#selectNewPID").find("option[value="+json.Model["PID"]+"]").after("<option value="+json.Model["ID"]+">"+split+json.Model["Name"]+"</option>");
-                     $("#selectEditPID").find("option[value="+json.Model["PID"]+"]").after("<option value="+json.Model["ID"]+">"+split+json.Model["Name"]+"</option>");
-                     $("#divList tr[data-key="+json.Model["PID"]+"]").after(trHtml);
+                    var newTr = $("#divList tr:eq(1)").clone(true);
+                    $("#divList tr:eq(1)").remove();
+                    newTr.find("[data-name=Name]").text(split + newTr.find("[data-name=Name]").text());
+                    $("#selectNewPID").find("option[value="+json.Model["PID"]+"]").after("<option value="+json.Model["ID"]+">"+split+json.Model["Name"]+"</option>");
+                    $("#selectEditPID").find("option[value="+json.Model["PID"]+"]").after("<option value="+json.Model["ID"]+">"+split+json.Model["Name"]+"</option>");
+                    $("#divList tr[data-key="+json.Model["PID"]+"]").after(newTr);
                 }
-                trHtml.attr("data-key",json.Model.ID);
-                
             }
-        }
-    </script>
-
-    <script type="text/javascript">
-        $(function(){
-            //列表监听事件
-             $("#divList").on("click","input","data",function(e){
-                 var data = $(this).attr("data-type");
-                 if(data=="edit"){ //编辑事件
-                    var tr = $(this).closest("tr");
-                    $("#divEdit").find("[data-name]").each(function(){
-                       var tagName = $(this)[0].tagName.toUpperCase();
-                       if(tagName == "INPUT" || tagName == "SELECT")$(this).val(tr.find("[data-name="+$(this).attr("data-name")+"]").html());
-                       else $(this).html(tr.find("[data-name="+$(this).attr("data-name")+"]").html());                       
-                    });
-                    $("#divEdit input[data-name=Name]").val($("#divEdit input[data-name=Name]").val().replace(/┗|━/g,""));
-                    $("#divEdit").modal("show");
-                 }
-             });        
-        })
-        function editBegin(){$("#btnEdit").button("加载中...");}
-        function editFailure(xhr,status ,error){$("#divAlterEdit").removeClass("hide").find("span").html(error);$("#btnEdit").button("reset");}
-        function editSucess(json){
-            $("#btnNew").button("reset");
-            if(!json.Success){
-                $("input[type=submit]").button("reset");
-                $("#divAlterEdit").removeClass("hide").find("span").html(json.Message);
-            }
-            else{
-                $("#formEdit")[0].reset();
-                $("#divEdit").modal("hide");
-                var tr = $("tr[data-key="+json.Model.ID+"]");
-                var PID = tr.find("[data-name=PID]").text();
-                for(var attr in json.Model){
-                    tr.find("[data-name="+attr+"]").html(json.Model[attr]);
-                }
+            FormEvent.EditSucess = function(json){
                 var split = "";
+                console.log(json.Model.Level);
                 if(parseInt(json.Model["Level"])>1){
                     split = "┗";
-                    if(parseInt(json.Model.Level)>1){
-                        for (var i = 0; i < parseInt(json.Model.Level)-1; i++)
-                            split += "━";                    
-                    }                
+                    for (var i = 0; i < parseInt(json.Model.Level)-1; i++)
+                        split += "━";                    
                 }
+                var tr = $("tr[data-key="+json.Model.ID+"]");
+                var PID = tr.find("[data-name=PID]").text();
                 tr.find("[data-name=Name]").text(split +tr.find("[data-name=Name]").text());
-                if(json.Model["PID"]==PID){
+                console.log(json);
+                if(!json.Model["Move"]){
+                    $("#selectNewPID").find("option[value="+json.Model["ID"]+"]").text(split+json.Model["Name"]);
                     $("#selectEditPID").find("option[value="+json.Model["ID"]+"]").text(split+json.Model["Name"]);
                 }
-                else{                    
+                else{       
                     $("#selectEditPID").find("option[value="+json.Model["ID"]+"]").remove();
                     $("#selectNewPID").find("option[value="+json.Model["ID"]+"]").remove();
                     $("#selectEditPID").find("option[value="+json.Model["PID"]+"]").after("<option value="+json.Model["ID"] +">"+split+json.Model["Name"]+"</option>");
@@ -216,6 +164,9 @@
                     $("#divList tr[data-key="+json.Model["PID"]+"]").after(newTr);
                 }
             }
-        }
+            FormEvent.Listen = function(){
+                $("#divEdit input[data-name=Name]").val($("#divEdit input[data-name=Name]").val().replace(/┗|━/g,""));                
+            }      
+        })
     </script>
 }

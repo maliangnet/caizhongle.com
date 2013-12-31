@@ -59,6 +59,7 @@ namespace Lottery.Web.Controllers
             if (userInfos != null && userInfos.Count > 1) return Json(new MessageInfo { Success = false, Message = "此邮箱已被使用,请换个试试." });
             userInfoEdit.Name = userInfo.Name;
             userInfoEdit.Email = userInfo.Email;
+            userInfoEdit.Phone = userInfo.Phone;
             Lottery.DatabaseProvider.Instance().UpdateUser(userInfoEdit);
             return Json(new MessageInfo { Success = true, Message = "修改成功.",Model=userInfoEdit });
         }
@@ -150,8 +151,9 @@ namespace Lottery.Web.Controllers
                     VideoCategoryInfo videoCategoryInfoParent = Lottery.DatabaseProvider.Instance().GetVideoCategoryByID(videoCategoryInfo.PID);
                     videoCategoryInfoEdit.Level = videoCategoryInfoParent == null ? 1 : videoCategoryInfoParent.Level + 1;
                 }
-            }            
+            }
             videoCategoryInfoEdit.Name = videoCategoryInfo.Name;
+            videoCategoryInfoEdit.Move = videoCategoryInfoEdit.PID == videoCategoryInfo.PID ? false : true;
             videoCategoryInfoEdit.PID = videoCategoryInfo.PID;
             videoCategoryInfoEdit.Memo = videoCategoryInfo.Memo;
             Lottery.DatabaseProvider.Instance().UpdateVideoCategory(videoCategoryInfoEdit);

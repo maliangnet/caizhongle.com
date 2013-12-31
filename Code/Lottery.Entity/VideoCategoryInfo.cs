@@ -18,5 +18,11 @@ namespace Lottery.Entity
         public DateTime? Date { set; get; }
 
         public int? Status { set; get; }
+
+        /// <summary>
+        /// 父级是否变化
+        /// </summary>
+        [MongoIgnore]
+        public bool Move { get;set; }
     }
 }

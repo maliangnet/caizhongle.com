@@ -51,7 +51,7 @@
     </div>
 </div>
 
-<form id="formNew" data-ajax="true" data-ajax-url="/POST/UserNew" data-ajax-begin="newBegin" data-ajax-failure="newFailure" data-ajax-success="newSucess" method="Post" class="form-horizontal">
+<form id="formNew" data-ajax="true" data-ajax-url="/POST/UserNew" data-ajax-begin="FormNew.Begin" data-ajax-failure="FormNew.Failure" data-ajax-success="FormNew.Sucess" method="Post" class="form-horizontal">
     <div id="divNew" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -79,7 +79,7 @@
                     <div id="divAlertNew" class="alert alert-warning hide"><span></span><button class="close">x</button></div>
                 </div>
                 <div class="modal-footer">                    
-                    <button type="submit" id="btnNew" class="btn btn-primary">添加用户</button>
+                    <button type="submit" id="btnNew" data-loading-text="加载中..." class="btn btn-primary">添加用户</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
@@ -87,7 +87,7 @@
     </div>
 </form>
 
-<form id="formEdit" data-ajax="true" data-ajax-url="/POST/UserEdit" data-ajax-begin="editBegin" data-ajax-failure="editFailure" data-ajax-success="editSucess" method="Post" class="form-horizontal">
+<form id="formEdit" data-ajax="true" data-ajax-url="/POST/UserEdit" data-ajax-begin="FormEdit.Begin" data-ajax-failure="FormEdit.Failure" data-ajax-success="FormEdit.Sucess" method="Post" class="form-horizontal">
     <div id="divEdit" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -116,79 +116,18 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="userInfo.ID"  data-name="ID" />
-                    <input type="submit" value="保存" class="btn btn-primary" />
+                    <input type="submit" value="保存" data-loading-text="加载中..." class="btn btn-primary" />
                     <input type="button" value="关闭" class="btn btn-default" data-dismiss="modal" />
               </div>
             </div>
         </div>
     </div>
 </form>
-
-
 @section ScriptSection
 {
     <script type="text/javascript">
         $(function(){
-            $("div.alert").find("button").click(function(e){
-                $(this).closest("div").addClass("hide");
-                e.preventDefault();
-            });
+            FormNew.Config.template = "<tr><td data-name='ID'></td><td data-name='Name'></td><td data-name='Email'></td><td data-name='Phone'></td><td data-name='Date'></td><td><input type='button' data-type='edit' value='编辑' class='btn btn-default' /></td></tr>";
         })
-    </script>
-
-    <script type="text/javascript">        
-        function newBegin(){$("#btnNew").button("加载中...");}
-        function newFailure(xhr,status ,error){$("#divAlertNew").removeClass("hide").find("span").html(error);$("#btnNew").button("reset");}
-        function newSucess(json){
-            $("#btnNew").button("reset");
-            if(!json.Success){
-                $("#divAlertNew").removeClass("hide").find("span").html(json.Message);
-            }
-            else{
-                $("#formNew")[0].reset();
-                $("#divNew").modal("hide");
-                var trHtml = $("<tr><td data-name='ID'></td><td data-name='Name'></td><td data-name='Email'></td><td data-name='Phone'></td><td data-name='Date'></td><td><input type='button' data-type='edit' value='编辑' class='btn btn-default' /></td></tr>");
-                for(var attr in json.Model){
-                    trHtml.find("td[data-name="+attr+"]").html(json.Model[attr]);
-                }
-                trHtml.attr("data-key",json.Model.ID);
-                $("#divList tr:eq(0)").after(trHtml);
-            }
-        }
-    </script>
-
-    <script type="text/javascript">
-        $(function(){
-            //列表监听事件
-             $("#divList").on("click","input","data",function(e){
-                 var data = $(this).attr("data-type");
-                 if(data=="edit"){ //编辑事件
-                    var tr = $(this).closest("tr");
-                    $("#divEdit").find("[data-name]").each(function(){
-                       var tagName = $(this)[0].tagName.toUpperCase();
-                       if(tagName == "INPUT")$(this).val(tr.find("td[data-name="+$(this).attr("data-name")+"]").html());
-                       else $(this).html(tr.find("td[data-name="+$(this).attr("data-name")+"]").html());                       
-                    });
-                    $("#divEdit").modal("show");
-                 }
-             });        
-        })
-        function editBegin(){$("#btnEdit").button("加载中...");}
-        function editFailure(xhr,status ,error){$("#divAlterEdit").removeClass("hide").find("span").html(error);$("#btnEdit").button("reset");}
-        function editSucess(json){
-            $("#btnNew").button("reset");
-            if(!json.Success){
-                $("input[type=submit]").button("reset");
-                $("#divAlterEdit").removeClass("hide").find("span").html(json.Message);
-            }
-            else{
-                $("#formEdit")[0].reset();
-                $("#divEdit").modal("hide");
-                var tr = $("tr[data-key="+json.Model.ID+"]");
-                for(var attr in json.Model){
-                    tr.find("td[data-name="+attr+"]").html(json.Model[attr]);
-                }
-            }
-        }
     </script>
 }
