@@ -135,6 +135,7 @@
     <Content Include="Themes\CSS\bootstrap.css" />
     <Content Include="Themes\CSS\web.css" />
     <Content Include="Themes\CSS\bootstrap_admin.css" />
+    <Content Include="Themes\Images\1.gif" />
     <Content Include="Themes\Images\delete.gif" />
     <Content Include="Themes\Images\logo.gif" />
     <Content Include="Themes\Images\uploadFileBG.gif" />
