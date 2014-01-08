@@ -10,8 +10,6 @@
   margin-bottom: 0;
   padding-left: 0; // Override default ul/ol
   list-style: none;
-  background-color:@red-dark;
-  border-radius: @nav-pills-border-radius;
   &:extend(.clearfix all);
 
   > li {
@@ -25,7 +23,7 @@
       &:hover,
       &:focus {
         text-decoration: none;
-        background-color: @red-darker;
+        background-color: @nav-link-hover-bg;
       }
     }
 
@@ -123,11 +121,9 @@
     // Links rendered as pills
     > a {
       border-radius: @nav-pills-border-radius;
-      ont-size:@font-size-h4;
-      color:@white;
     }
     + li {
-      margin-left: 5px;
+      margin-left: 2px;
     }
 
     // Active state
@@ -135,8 +131,8 @@
       &,
       &:hover,
       &:focus {
-        color: @white;
-        background-color: @red-darker;
+        color: @nav-pills-active-link-hover-color;
+        background-color: @nav-pills-active-link-hover-bg;
       }
     }
   }

@@ -133,6 +133,8 @@
     <Content Include="Help.txt" />
     <Content Include="Themes\CSS\admin.css" />
     <Content Include="Themes\CSS\bootstrap.css" />
+    <Content Include="Themes\CSS\web.css" />
+    <Content Include="Themes\CSS\bootstrap_admin.css" />
     <Content Include="Themes\Images\delete.gif" />
     <Content Include="Themes\Images\logo.gif" />
     <Content Include="Themes\Images\uploadFileBG.gif" />
@@ -192,6 +194,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\VideoCategoryList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Web\_ViewStart.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

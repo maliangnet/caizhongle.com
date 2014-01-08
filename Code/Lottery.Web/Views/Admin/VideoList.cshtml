@@ -18,7 +18,7 @@
         <div class="form-group">
              <label>&nbsp;</label>
             <input type="hidden" name="pageInfo.PageSize" value="10" />
-            <input type="submit" id="btnSearch" class="btn btn-primary form-control" />
+            <input type="submit" value="搜索" id="btnSearch" class="btn btn-primary form-control" />
         </div>
         <div class="pull-right"> <label>&nbsp;</label><input type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#divNew" data-loading-text="加载中..." value="添加视频" /></div>
     </form>
@@ -32,6 +32,7 @@
             <th>分类</th>
             <th>文件</th>
             <th>日期</th>
+            <th>图片</th>
             <th>操作</th>
         </tr>
         @foreach (var item in Model)
@@ -42,6 +43,7 @@
                 <td data-name="VideoCategoryName" >@item.VideoCategoryName</td>
                 <td data-name="File" >@item.File</td>
                 <td data-name="Date" >@item.Date</td>
+                <td data-name="Image" data-type="Image"><img src="/Upload/Video/@item.Image" alt=""/></td>
                 <td>
                     <input type="button" value="编辑" data-type="edit" class="btn btn-default" />
                     <span class="hide" data-name="VideoCategoryID">@item.VideoCategoryID</span>
@@ -155,7 +157,11 @@
 {
     <script type="text/javascript">
         $(function(){
-            FormNew.Config.template = "<tr><td data-name='ID'></td><td data-name='Name'><td data-name='VideoCategoryName'></td><td data-name='File'></td><td data-name='Date'></td><td><input type='button' data-type='edit' value='编辑' class='btn btn-default' /></td></tr>";
+            FormNew.Config.template = "<tr><td data-name='ID'></td><td data-name='Name'><td data-name='VideoCategoryName'></td><td data-name='File'></td><td data-name='Date'></td><td data-name='Image'  data-type='Image'></td><td><input type='button' data-type='edit' value='编辑' class='btn btn-default' /></td></tr>";
+            FormEvent.NewSucess = function(){
+                $("#hiddenNewImage").empty();
+                $("#pNewImage").empty();
+            }
             //上传图片
             $("#fileNewImage").change(function()
             {

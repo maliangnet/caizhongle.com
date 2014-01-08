@@ -72,8 +72,8 @@ $(function(){
     });
     //列表监听事件
     $(FormNew.Config.list).on("click","input","data",function(e){
-        var data = $(this).attr("data-type");
-        if(data=="edit"){ //编辑事件
+        var data = $(this).attr("data-type").toUpperCase();
+        if(data=="EDIT"){ //编辑事件
             var tr = $(this).closest("tr");
             $(FormEdit.Config.modal).find("[data-name]").each(function(){
                 var tagName = $(this)[0].tagName.toUpperCase();
@@ -82,6 +82,10 @@ $(function(){
             });
             $(FormEdit.Config.modal).modal("show");
             FormEvent.Listen();
+        }
+        else if(data=="DELETE"){ //删除事件
+           var tr = $(this).closest("tr");
+            
         }
     });  
 })

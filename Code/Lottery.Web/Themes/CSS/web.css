@@ -1,0 +1,4 @@
+﻿.divNav{background-color:#ff4400;}
+ .divNav ul li {float:left;width:14.2857% }
+ .divNav ul li a{float:left; color:#ffffff;font-size:18px;font-weight:600;}
+ .divNav ul li a:active{float:left; color:#d62f00;font-size:18px;font-weight:600;}

@@ -1,13 +1,26 @@
-﻿@{Layout = null;}
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <link type="text/css" rel="stylesheet" href="~/Themes/CSS/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="~/Themes/CSS/web.css" />
 </head>
 <body>
-    <div>
-        
+    <div class="container">
+        <ul class="nav nav-pills">
+            <li><a href="#">Logo</a></li>
+            <li class="active"><a href="#">首页</a></li>
+            <li><a href="#">开奖视频</a></li>
+            <li><a href="#">视频讲座</a></li>
+            <li><a href="#">彩票视频</a></li>
+            <li><a href="#">专家博客</a></li>
+            <li><a href="#">全国开奖</a></li>
+        </ul>
+        @RenderBody()
     </div>
+    <script type="text/javascript" src="~/Themes/JS/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="~/Themes/JS/bootstrap.js"></script>
 </body>
 </html>

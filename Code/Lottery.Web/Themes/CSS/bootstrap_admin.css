@@ -3317,8 +3317,6 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-bottom: 0;
   padding-left: 0;
   list-style: none;
-  background-color: #ff8f66;
-  border-radius: 4px;
 }
 .nav > li {
   position: relative;
@@ -3332,7 +3330,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #ff7645;
+  background-color: #eeeeee;
 }
 .nav > li.disabled > a {
   color: #999999;
@@ -3433,17 +3431,15 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 .nav-pills > li > a {
   border-radius: 4px;
-  ont-size: 18px;
-  color: #ffffff;
 }
 .nav-pills > li + li {
-  margin-left: 5px;
+  margin-left: 2px;
 }
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
   color: #ffffff;
-  background-color: #ff7645;
+  background-color: #428bca;
 }
 .nav-stacked > li {
   float: none;
